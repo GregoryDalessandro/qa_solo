@@ -32,6 +32,6 @@ Broke down testing into the following areas:
 3. Contact
 
 ## Page Objects
-1. index
-2. cart (extends index)
-3. prod (product) (extends index)
+1. basePage
+2. cart (extends basePage)
+3. prod (product) (extends basePage)
