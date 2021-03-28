@@ -40,7 +40,7 @@ export class BasePage {
    * @param {By} elementBy - the locator for the element to click on
    */
   async click(elementBy: By) {
-    let element = await this.driver.findElement(elementBy);
+    let element = await this.getElement(elementBy);
     await this.driver.wait(until.elementIsEnabled(element));
     return await element.click();
   }
