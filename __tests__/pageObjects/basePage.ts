@@ -50,7 +50,7 @@ export class BasePage {
  * @param {string} keys - the string that is being sent
  */
   async inputText(elementBy: By, keys: string) {
-    let input = await this.driver.findElement(elementBy);
+    let input = await this.getElement(elementBy);
     await  this.driver.wait(until.elementIsEnabled(input));
     await input.clear();
     return input.sendKeys(keys);
