@@ -21,9 +21,7 @@ export class BasePage {
   logOut: By = By.id("logout");
 
   constructor(driver) {
-    this.driver = new Builder()
-    .withCapabilities(Capabilities.chrome())
-    .build();
+    this.driver = driver;
   }
   /**
    * wait for the element to be located and become visible before returning it.
