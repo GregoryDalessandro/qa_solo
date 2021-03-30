@@ -10,7 +10,7 @@ const chromedriver = require("chromedriver");
 
 export class BasePage {
   driver: WebDriver;
-  url: string;
+  url: string = "https://www.demoblaze.com/";
   logo: By = By.id("nava");
   home: By = By.xpath("//a[contains(text(), 'Home')]");
   contact: By = By.xpath("//a[contains(text(), 'Contact')]");
