@@ -218,24 +218,40 @@ describe ("demoblaze", () => {
   //   await (await driver.switchTo().alert()).accept();
   //   expect(alertMessage).toEqual("This user already exist.");
   // });
-  test("user can sign in", async() => {
+  // test("user can sign in", async() => {
+  //   let accountInfo = await demoblaze.makeRandomString(10);
+  //   // create an account
+  //   await demoblaze.createAccount(`${accountInfo}`, `${accountInfo}`);
+  //   await driver.wait(until.alertIsPresent());
+  //   await driver.sleep(500);
+  //   //close the popup
+  //   await (await driver.switchTo().alert()).accept();
+  //   await driver.sleep(500);
+  //   // sign in
+  //   await demoblaze.signIn(`${accountInfo}`,`${accountInfo}`)
+  //   await driver.sleep(500);
+  //   await driver.switchTo().activeElement();
+  //   let nameofUser = await (await demoblaze.getElement(By.id("nameofuser"))).getText();
+  //   await driver.sleep(500);
+  //   expect(nameofUser).toEqual(`Welcome ${accountInfo}`)
+  // });
+  test("user can sign out", async() => {
     let accountInfo = await demoblaze.makeRandomString(10);
-     // create an account
-     await demoblaze.createAccount(`${accountInfo}`, `${accountInfo}`);
-     await driver.wait(until.alertIsPresent());
-     await driver.sleep(500);
-     //close the popup
-     await (await driver.switchTo().alert()).accept();
-     await driver.sleep(500);
-     // sign in
-     await demoblaze.signIn(`${accountInfo}`,`${accountInfo}`)
-     await driver.sleep(500);
-     await driver.switchTo().activeElement();
-     let nameofUser = await (await demoblaze.getElement(By.id("nameofuser"))).getText();
-     console.log("nameofUser", nameofUser);
-     await driver.sleep(500);
-     expect(nameofUser).toEqual(`Welcome ${accountInfo}`)
+    // create an account
+    await demoblaze.createAccount(`${accountInfo}`, `${accountInfo}`);
+    await driver.wait(until.alertIsPresent());
+    await driver.sleep(500);
+    //close the popup
+    await (await driver.switchTo().alert()).accept();
+    await driver.sleep(500);
+    // sign in
+    await demoblaze.signIn(`${accountInfo}`,`${accountInfo}`)
+    await driver.sleep(500);
+    await driver.switchTo().activeElement();
+    await driver.sleep(500);
+    //sign out
+    await demoblaze.signOut();
+    let signupButtonIsVsible = await (await demoblaze.getElement(demoblaze.signUp)).isDisplayed();
+    expect(signupButtonIsVsible).toBeTruthy()
   });
-  // test("user can sign out", async() => {});
-
 })
