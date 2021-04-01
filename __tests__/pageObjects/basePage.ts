@@ -19,7 +19,7 @@ export class BasePage {
   cart: By = By.xpath("//a[contains(text(), 'Cart')]");
   signUp: By = By.id("signin2");
   logIn: By = By.id("login2");
-  logOut: By = By.id("logout");
+  logOut: By = By.id("logout2");
 
 
 
