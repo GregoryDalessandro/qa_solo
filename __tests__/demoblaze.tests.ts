@@ -27,7 +27,7 @@ const driver: WebDriver = new Builder()
     afterAll(async ()=> {
       await driver.quit();
     });
-    //header and navigation tests
+    header and navigation tests
     test("user can navigate to the main page via the logo", async () => {
       await demoblaze.click(demoblaze.cart);
       // pause to allow website to catch up with the test
@@ -83,12 +83,12 @@ const driver: WebDriver = new Builder()
     //     expect(phones[i]).toContain(hardCodedFilteredBodyElements[j])
     //   }
 
-      // expect body to contain each of the products in phones
+    //   // expect body to contain each of the products in phones
 
-      // click laptops
-      // expect there to be only laptops
-      // click monitors
-      // expect there to be only monitors
+    //   // click laptops
+    //   // expect there to be only laptops
+    //   // click monitors
+    //   // expect there to be only monitors
     // });
     test("user can select previous and next buttons", async() => {
       //expect the main page to show the "first product page" (however you can select previous)
@@ -108,7 +108,24 @@ const driver: WebDriver = new Builder()
     });
     test("user can add multiple products to the cart", async() => {});
     test("the products remain in the cart after navigating away ", async() => {});
-    test("user can remove a product from the cart", async() => {});
+    test("user can remove a product from the cart", async() => {
+      // navigate to a product page, add to cart, then navigate to cart
+      await demoblazeProduct.click(By.xpath("//a[contains(text(), 'Samsung galaxy s6')]"));
+      await demoblazeProduct.addToCart();
+      // wait for the alert to show up, then close it by accepting
+      await driver.wait(until.alertIsPresent());
+      let alert = await driver.switchTo().alert();
+      await alert.accept();
+      await demoblazeProduct.click(demoblazeProduct.cart);
+      await driver.sleep(500);
+      // compare cart before and after removal
+      let cartBeforeRemoval = await demoblazeProduct.driver.findElements(By.xpath("//tr[@class='success']"));
+      await demoblazeProduct.click(By.xpath("//a[contains(text(),'Delete')]"));
+      await driver.sleep(500);
+      let cartAfterRemoval = await demoblazeProduct.driver.findElements(By.xpath("//tr[@class='success']"));
+      //expect the product to no longer be in the cart
+      expect(cartBeforeRemoval.length > cartAfterRemoval.length && cartAfterRemoval.length === 0).toBeTruthy();
+    });
     test("user can place an order", async() => {
       // with empty inputs
       // with only 1 input filled out
