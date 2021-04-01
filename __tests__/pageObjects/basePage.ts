@@ -60,6 +60,20 @@ export class BasePage {
     return input.sendKeys(keys);
   }
   /**
+   * create a random string for creating an account and password
+   * @param length - length of the resulting string
+   * @returns randomized string with given length
+   */
+  async makeRandomString(length){
+    let result: string = "";
+    let chars: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charsLength = chars.length;
+    for (var i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * charsLength));
+    }
+    return result;
+  }
+  /**
    * create an account with the provided keys as the inputs, then click the Sign Up button
    * @param {string} username - the string that is being sent for the username input field
    * @param {string} password - the string that is being sent for the password input field
@@ -72,6 +86,7 @@ export class BasePage {
     await this.driver.sleep(500);
     await this.inputText(By.id("sign-username"), username);
     await this.inputText(By.id("sign-password"), password);
+    await this.driver.sleep(500);
     await this.click(By.xpath("//button[contains(text(), 'Sign up')]"));
   }
   /**
