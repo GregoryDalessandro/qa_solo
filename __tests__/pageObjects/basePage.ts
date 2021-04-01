@@ -21,6 +21,8 @@ export class BasePage {
   logIn: By = By.id("login2");
   logOut: By = By.id("logout");
 
+
+
   constructor(driver) {
     this.driver = driver;
   }
@@ -85,8 +87,8 @@ export class BasePage {
     }
     await this.driver.sleep(500);
     await this.inputText(By.id("sign-username"), username);
-    await this.inputText(By.id("sign-password"), password);
     await this.driver.sleep(500);
+    await this.inputText(By.id("sign-password"), password);
     await this.click(By.xpath("//button[contains(text(), 'Sign up')]"));
   }
   /**
@@ -96,7 +98,9 @@ export class BasePage {
    */
   async signIn(username: string, password: string) {
     await this.click(this.logIn);
+    await this.driver.sleep(500);
     await this.inputText(By.id("loginusername"), username);
+    await this.driver.sleep(500);
     await this.inputText(By.id("loginpassword"), password);
     await this.click(By.xpath("//button[contains(text(), 'Log in')]"));
   }
