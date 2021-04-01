@@ -189,18 +189,35 @@ describe ("demoblaze", () => {
   //   // with only name and credit card fields filled out
   // });
   // sign up/in/out
-  test("user can sign up", async() => {
-    let randomString = await demoblaze.makeRandomString(10);
-    await demoblaze.createAccount(`${randomString}`, `${randomString}`);
+  // test("user can sign up", async() => {
+  //   let randomString = await demoblaze.makeRandomString(10);
+  //   await demoblaze.createAccount(`${randomString}`, `${randomString}`);
+  //   await driver.wait(until.alertIsPresent());
+  //   await driver.sleep(500);
+  //   let alertMessage = await driver.switchTo().alert().getText();
+  //   //close the popup
+  //   await (await driver.switchTo().alert()).accept();
+  //   expect(alertMessage).toEqual("Sign up successful.");
+  // });
+  test("user cannot sign up if the username has already been taken", async() => {
+    let usedName = await demoblaze.makeRandomString(10);
+    // create an account
+    await demoblaze.createAccount(`${usedName}`, `${usedName}`);
     await driver.wait(until.alertIsPresent());
     await driver.sleep(500);
-    let alertMessage = await driver.switchTo().alert().getText();
     //close the popup
+    await driver.wait(until.alertIsPresent());
     await (await driver.switchTo().alert()).accept();
-
-    expect(alertMessage).toEqual("Sign up successful.");
+    await driver.sleep(500);
+    //attempt to create an account with the same info
+    await demoblaze.click(demoblaze.signUp);
+    await driver.sleep(500);
+    await demoblaze.click(By.xpath("//button[contains(text(), 'Sign up')]"))
+    await driver.wait(until.alertIsPresent());
+    let alertMessage = await driver.switchTo().alert().getText();
+    await (await driver.switchTo().alert()).accept();
+    expect(alertMessage).toEqual("This user already exist.");
   });
-  // test("user cannot sign up if the username has already been taken", async() => {});
   // test("user can sign in", async() => {});
   // test("user can sign out", async() => {});
 
