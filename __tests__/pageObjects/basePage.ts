@@ -7,6 +7,7 @@ import {
   WebElement
 } from "selenium-webdriver";
 const chromedriver = require("chromedriver");
+const fs = require("fs");
 
 export class BasePage {
   driver: WebDriver;
@@ -55,8 +56,8 @@ export class BasePage {
   }
   /**
    * create an account with the provided keys as the inputs, then click the Sign Up button
-   * @param username - the string that is being sent for the username input field
-   * @param password - the string that is being sent for the password input field
+   * @param {string} username - the string that is being sent for the username input field
+   * @param {string} password - the string that is being sent for the password input field
    */
   async createAccount (username: string, password: string) {
     await this.click(this.signUp);
@@ -66,8 +67,8 @@ export class BasePage {
   }
   /**
    * log into the account with provided keys, then click the Log In button
-   * @param username - the string that is being sent for the username input field
-   * @param password - the string that is being sent for the password input field
+   * @param {string} username - the string that is being sent for the username input field
+   * @param {string} password - the string that is being sent for the password input field
    */
   async signIn(username: string, password: string) {
     await this.click(this.logIn);
@@ -78,6 +79,25 @@ export class BasePage {
   // sign out of the account
   async signOut() {
     await this.click(this.logOut);
+  }
+/**
+ * Will automatically take a screenshot and save it to the filepath/filename provided
+ * Automatically saves as a .png file.
+ * @param {string} filepath - the filepath relative to the base folder where you want the screenshot saved
+ * @example
+ * page.takeScreenshot("myFolder/mypic")
+ * // picture saves in "myFolder" as mypic.png"
+*/
+  async takeScreenshot(filepath: string) {
+    fs.writeFile(
+      `${filepath}.png`,
+      await this.driver.takeScreenshot(),
+      "base64",
+      (e) => {
+        if (e) console.log(e);
+        else console.log("screenshot saved successfullly");
+      }
+    );
   }
 }
 
