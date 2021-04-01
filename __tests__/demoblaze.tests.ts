@@ -199,26 +199,43 @@ describe ("demoblaze", () => {
   //   await (await driver.switchTo().alert()).accept();
   //   expect(alertMessage).toEqual("Sign up successful.");
   // });
-  test("user cannot sign up if the username has already been taken", async() => {
-    let usedName = await demoblaze.makeRandomString(10);
-    // create an account
-    await demoblaze.createAccount(`${usedName}`, `${usedName}`);
-    await driver.wait(until.alertIsPresent());
-    await driver.sleep(500);
-    //close the popup
-    await driver.wait(until.alertIsPresent());
-    await (await driver.switchTo().alert()).accept();
-    await driver.sleep(500);
-    //attempt to create an account with the same info
-    await demoblaze.click(demoblaze.signUp);
-    await driver.sleep(500);
-    await demoblaze.click(By.xpath("//button[contains(text(), 'Sign up')]"))
-    await driver.wait(until.alertIsPresent());
-    let alertMessage = await driver.switchTo().alert().getText();
-    await (await driver.switchTo().alert()).accept();
-    expect(alertMessage).toEqual("This user already exist.");
+  // test("user cannot sign up if the username has already been taken", async() => {
+  //   let usedName = await demoblaze.makeRandomString(10);
+  //   // create an account
+  //   await demoblaze.createAccount(`${usedName}`, `${usedName}`);
+  //   await driver.wait(until.alertIsPresent());
+  //   await driver.sleep(500);
+  //   //close the popup
+  //   await driver.wait(until.alertIsPresent());
+  //   await (await driver.switchTo().alert()).accept();
+  //   await driver.sleep(500);
+  //   //attempt to create an account with the same info
+  //   await demoblaze.click(demoblaze.signUp);
+  //   await driver.sleep(500);
+  //   await demoblaze.click(By.xpath("//button[contains(text(), 'Sign up')]"))
+  //   await driver.wait(until.alertIsPresent());
+  //   let alertMessage = await driver.switchTo().alert().getText();
+  //   await (await driver.switchTo().alert()).accept();
+  //   expect(alertMessage).toEqual("This user already exist.");
+  // });
+  test("user can sign in", async() => {
+    let accountInfo = await demoblaze.makeRandomString(10);
+     // create an account
+     await demoblaze.createAccount(`${accountInfo}`, `${accountInfo}`);
+     await driver.wait(until.alertIsPresent());
+     await driver.sleep(500);
+     //close the popup
+     await (await driver.switchTo().alert()).accept();
+     await driver.sleep(500);
+     // sign in
+     await demoblaze.signIn(`${accountInfo}`,`${accountInfo}`)
+     await driver.sleep(500);
+     await driver.switchTo().activeElement();
+     let nameofUser = await (await demoblaze.getElement(By.id("nameofuser"))).getText();
+     console.log("nameofUser", nameofUser);
+     await driver.sleep(500);
+     expect(nameofUser).toEqual(`Welcome ${accountInfo}`)
   });
-  // test("user can sign in", async() => {});
   // test("user can sign out", async() => {});
 
 })
