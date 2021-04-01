@@ -34,6 +34,11 @@ export class BasePage {
     await this.driver.wait(until.elementIsVisible(element));
     return element;
   }
+
+  async getText(elementBy: By) {
+    return await (await this.getElement(elementBy)).getText();
+  }
+
   /**
    * click on the given element after it becomes enabled
    * @param {By} elementBy - the locator for the element to click on
@@ -61,6 +66,7 @@ export class BasePage {
    */
   async createAccount (username: string, password: string) {
     await this.click(this.signUp);
+    await this.driver.sleep(500);
     await this.inputText(By.id("sign-username"), username);
     await this.inputText(By.id("sign-password"), password);
     await this.click(By.xpath("//button[contains(text(), 'Sign up')]"));
