@@ -65,7 +65,10 @@ export class BasePage {
    * @param {string} password - the string that is being sent for the password input field
    */
   async createAccount (username: string, password: string) {
-    await this.click(this.signUp);
+    // only click sign up header if we are not already in the sign up menu
+    if (! await (await this.driver.findElement(By.xpath("//button[contains(text(), 'Sign up')]"))).isDisplayed()) {
+      await this.click(this.signUp);
+    }
     await this.driver.sleep(500);
     await this.inputText(By.id("sign-username"), username);
     await this.inputText(By.id("sign-password"), password);
