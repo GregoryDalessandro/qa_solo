@@ -20,9 +20,6 @@ export class BasePage {
   signUp: By = By.id("signin2");
   logIn: By = By.id("login2");
   logOut: By = By.id("logout2");
-
-
-
   constructor(driver) {
     this.driver = driver;
   }
@@ -36,11 +33,9 @@ export class BasePage {
     await this.driver.wait(until.elementIsVisible(element));
     return element;
   }
-
   async getText(elementBy: By) {
     return await (await this.getElement(elementBy)).getText();
   }
-
   /**
    * click on the given element after it becomes enabled
    * @param {By} elementBy - the locator for the element to click on

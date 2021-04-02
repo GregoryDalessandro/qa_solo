@@ -43,6 +43,7 @@ export class CartPage extends BasePage {
     await this.inputText(this.creditCardInput, cc);
     await this.inputText(this.monthInput, month);
     await this.inputText(this.yearInput, year);
+    await this.driver.sleep(500);
     await this.click(this.purchaseBtn);
   }
   /**
@@ -58,5 +59,8 @@ export class CartPage extends BasePage {
    */
   async removeFromCart(elementBy: By) {
     await this.click(elementBy);
+  }
+  // clear the entire cart
+  async clearCart() {
   }
 }

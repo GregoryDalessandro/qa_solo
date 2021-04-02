@@ -13,7 +13,6 @@ export class ProductPage extends BasePage {
   constructor(driver:WebDriver) {
     super(driver);
   }
-
   //add a product to the cart
   async addToCart() {
     await this.click(this.addToCartBtn);
